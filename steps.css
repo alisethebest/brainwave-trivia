@@ -10,25 +10,43 @@ p {
 
 /* Apply background color to body */
 body {
-    background-color: #1a2d4c;
+    background-color: #FFEEEE;
     font-family: 'Arial', sans-serif;
-    color: white;
+    color: #222222;
 }
 
 /* Header styles */
 .header {
-    background-color: #00bcd4;
+    background-color: rgb(128, 215, 231);
     padding: 20px 0;
+    text-align: center;
+    /* Center align the content within the header */
+}
+
+.header p{
+    font-size: 24px;
+    color: #110000;
+    margin-bottom: 10px;
+}
+
+.header img {
+    display: block;
+    margin: 0 auto;
+    /* Center the image horizontally */
+    border-radius: 50%;
+  
 }
 
 .header h1 {
-    text-align: center;
     font-size: 36px;
+    color: #180101;
+    margin-bottom: 10px;
 }
 
 /* Section styles */
 .instructions-section {
     padding: 40px 0;
+    text-align: center;
 }
 
 /* Container styles */
@@ -42,7 +60,7 @@ body {
 h2 {
     font-size: 28px;
     margin-bottom: 20px;
-    color: #00bcd4;
+    color: black;
 }
 
 /* Style the ordered list */
@@ -55,30 +73,36 @@ h2 {
 }
 
 /* Style the start button */
+.start-button-container {
+    text-align: center;
+}
+
 .start-button {
     display: inline-block;
     padding: 15px 30px;
-    background-color: #00bcd4;
-    color: white;
+    background-color: #55f7f4;
+    color: #FFFFFF;
     text-decoration: none;
     font-size: 20px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .start-button:hover {
-    background-color: #008c9e;
+    background-color: rgb(16, 110, 234);
 }
 
 /* Footer styles */
 .footer {
-    background-color: #00bcd4;
+    background-color: rgb(128, 215, 231);
     padding: 20px 0;
 }
 
 .footer p {
     text-align: center;
     font-size: 14px;
+    color: #0d0101;
 }

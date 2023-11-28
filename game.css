@@ -24,6 +24,13 @@ body {
     font-size: 24px;
 }
 
+.header p{
+    font-size: 18px;
+    color: #110000;
+    margin-bottom: 10px;
+    text-align: right ;
+}
+
 /* Quiz section styles */
 .quiz-section {
     padding: 40px 0;
@@ -109,4 +116,20 @@ body {
 .footer p {
     text-align: center;
     font-size: 14px;
+}
+
+.page-container {
+    animation: fade-in 0.5s ease-in-out;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

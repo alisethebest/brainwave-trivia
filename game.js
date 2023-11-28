@@ -3,6 +3,8 @@ const answersElement = document.getElementById("answers");
 const nextButton = document.getElementById("next-button");
 const prevButton = document.createElement("button");
 const submitButton = document.createElement("button");
+const timerElement = document.createElement("div"); // Timer element
+const summaryElement = document.createElement("div"); // Summary element
 
 const questions = [
   {
@@ -64,10 +66,12 @@ const questions = [
   },
 ];
 
-
 let currentQuestion = 0;
 let score = 0;
 let userAnswers = Array(questions.length).fill(-1);
+let timer; // Timer variable
+let timeLimit = 10; // Time limit for each question in seconds
+let points = 0; // Points earned for each question
 
 function showQuestion() {
   const question = questions[currentQuestion];
@@ -100,6 +104,31 @@ function showQuestion() {
   }
 }
 
+function startTimer() {
+  let timeRemaining = timeLimit;
+  timerElement.textContent = formatTime(timeRemaining);
+
+  timer = setInterval(() => {
+    timeRemaining--;
+
+    if (timeRemaining >= 0) {
+      timerElement.textContent = formatTime(timeRemaining);
+    } else {
+      clearInterval(timer);
+      timerElement.textContent = "Time's Up!";
+      submitAnswer();
+    }
+  }, 1000);
+}
+
+function formatTime(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  return `${minutes.toString().padStart(2, "0")}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
+}
+
 function selectAnswer(index, answerElement) {
   const prevSelected = document.querySelector(".selected");
   if (prevSelected) {
@@ -110,25 +139,27 @@ function selectAnswer(index, answerElement) {
 }
 
 function submitAnswer() {
-  if (userAnswers[currentQuestion] === questions[currentQuestion].correct) {
-    score++;
-  }
-  nextQuestion();
-}
+  clearInterval(timer); // Stop the timer
 
-function nextQuestion() {
-  currentQuestion++;
-  if (currentQuestion < questions.length) {
-    showQuestion();
+  const question = questions[currentQuestion];
+  const answerIndex = userAnswers[currentQuestion];
+  const timeTaken =
+    timeLimit - parseInt(timerElement.textContent.split(":")[1]);
+
+  if (answerIndex === question.correct) {
+    if (timeTaken <= 5) {
+      points += 3;
+    } else {
+      points += 5;
+    }
+  }
+
+  if (currentQuestion === questions.length - 1) {
+    showSummary();
   } else {
-    alert(
-      `Congratulations! You finished the trivia. Your score is ${score} out of ${questions.length}.`
-    );
-    currentQuestion = 0;
-    score = 0;
-    userAnswers.fill(-1);
-     window.location.href = "steps.html";
+    currentQuestion++;
     showQuestion();
+    startTimer();
   }
 }
 
@@ -139,4 +170,39 @@ function prevQuestion() {
   }
 }
 
+function showSummary() {
+  questionElement.style.display = "none";
+  answersElement.style.display = "none";
+  timerElement.style.display = "none";
+  nextButton.style.display = "none";
+  prevButton.style.display = "none";
+  submitButton.style.display = "none";
+
+  const missedQuestions = [];
+  questions.forEach((question, index) => {
+    if (userAnswers[index] !== question.correct) {
+      missedQuestions.push(index + 1);
+    }
+  });
+
+  summaryElement.textContent = `Score: ${points} out of ${questions.length}`;
+
+  if (missedQuestions.length > 0) {
+    let missedQuestionsHTML = "";
+    missedQuestions.forEach((questionIndex) => {
+      missedQuestionsHTML += `<li>${questionIndex}</li>`;
+    });
+    summaryElement.innerHTML += `<br>Missed questions: <ul>${missedQuestionsHTML}</ul>`;
+  }
+
+  summaryElement.className = "summary";
+  document.body.appendChild(summaryElement);
+}
+
+// Append the timer element to the container
+const container = document.querySelector(".container");
+timerElement.className = "timer";
+container.appendChild(timerElement);
+
 showQuestion();
+startTimer();
