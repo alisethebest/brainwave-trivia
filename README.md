@@ -7,7 +7,7 @@ Brainwave Trivia is an exciting web-based trivia game designed to test knowledge
 - JavaScript
 - HTML5
 - CSS3
-- 
+
 ## Technical Information
 ### Setup and Installation
 To set up Brainwave Trivia locally:
